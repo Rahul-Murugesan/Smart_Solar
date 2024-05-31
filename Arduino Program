@@ -1,0 +1,39 @@
+#include <Servo.h>
+const int ldrPin1 = A0;
+const int ldrPin2 = A1;// Analog input pin for LDR
+float ldrValue1;         // Variable to store the LDR value
+float ldrValue2;
+float diff;
+float angle;
+
+Servo servo;
+int servoangle = 0;
+
+
+void setup() {
+  Serial.begin(9600);
+  servo.attach(9);
+  // Initialize serial communication
+}
+
+void loop() {
+  ldrValue1 = analogRead(ldrPin1); // Read the LDR value (0-1023)
+  ldrValue2 = analogRead(ldrPin2);
+  
+  int currentAngle = servo.read();
+  // You can also convert the analog value to a percentage of light:
+  // int lightPercentage = map(ldrValue, 0, 1023, 0, 100);
+
+ // Serial.print("LDR Value1: ");
+  //Serial.println(ldrValue1);
+  //Serial.print("LDR value2: ");
+  //Serial.println(ldrValue2);
+
+
+
+  delay(100); // Delay for readability (adjust as needed)
+  diff = ldrValue1 - ldrValue2;
+  angle = map(diff,0,1023,0,180);
+  servo.write(angle);
+}
+ 
